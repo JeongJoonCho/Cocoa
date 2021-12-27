@@ -9,7 +9,7 @@
 <link href="resources/css/styles.css" rel="stylesheet" />
 <script type="text/javascript" src="resources/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript"
-	src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ba36jg1kum"></script>
+	src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=7kuhr3ly8q"></script>
 <script type="text/javascript">
 	function readURL(input) {
 
