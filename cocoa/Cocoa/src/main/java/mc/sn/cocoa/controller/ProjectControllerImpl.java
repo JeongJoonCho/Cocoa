@@ -46,7 +46,7 @@ public class ProjectControllerImpl implements ProjectController {
 	@Autowired
 	private ReviewService reviewService;
 
-	// 코치 글 조회
+	// 프로젝트 글 조회
 	@Override
 	@RequestMapping(value = "/view_projectCate", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView view_projectCate(HttpServletRequest request, HttpServletResponse response, Criteria cri)

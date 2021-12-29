@@ -66,18 +66,6 @@ public class MemberControllerImpl implements MemberController {
 		return mav;
 	}
 
-	// 회원가입
-	@Override
-	@ResponseBody
-	@RequestMapping(value = "/join", method = RequestMethod.POST)
-	public int join(@ModelAttribute("member") MemberVO memberVO, HttpServletRequest request,
-			HttpServletResponse response) throws UnsupportedEncodingException {
-		request.setCharacterEncoding("utf-8");
-		int result = 0;
-		result = memberService.joinMember(memberVO);
-		return result;
-	}
-
 	// 타인 프로필 화면 이동
 	@RequestMapping(value = "/view_profileInfo", method = RequestMethod.GET)
 	public ModelAndView view_proFileInfo(@RequestParam("profileId") String id, HttpServletRequest request,
@@ -88,6 +76,46 @@ public class MemberControllerImpl implements MemberController {
 		String url = "/account/profileInfo";
 		mav.setViewName(url);
 		return mav;
+	}
+	
+	// 마이페이지 이동
+	@Override
+	@RequestMapping(value = "/view_myPageProfile", method = RequestMethod.GET)
+	public ModelAndView view_myPageProfile(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		HttpSession session = request.getSession();
+		MemberVO vo = (MemberVO) session.getAttribute("member");
+		String id = vo.getId();
+
+		// 프로필 정보 가져오기
+		MemberVO memberVO = memberService.searchMember(id);
+		mav.addObject("profileId", memberVO);
+
+		String url = "/myPage/myPageProfile";
+		mav.setViewName(url);
+		return mav;
+	}
+	
+	// 회원정보 수정 이동
+	@Override
+	@RequestMapping(value = "/view_memberInfo", method = RequestMethod.GET)
+	public ModelAndView view_memberInfo(HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView();
+		String url = "/myPage/myPageInfo";
+		mav.setViewName(url);
+		return mav;
+	}
+	
+	// 회원가입
+	@Override
+	@ResponseBody
+	@RequestMapping(value = "/join", method = RequestMethod.POST)
+	public int join(@ModelAttribute("member") MemberVO memberVO, HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
+		request.setCharacterEncoding("utf-8");
+		int result = 0;
+		result = memberService.joinMember(memberVO);
+		return result;
 	}
 
 	// 로그인
@@ -231,34 +259,6 @@ public class MemberControllerImpl implements MemberController {
 			resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);
 		}
 		return resEnt;
-	}
-
-	// 마이페이지 이동
-	@Override
-	@RequestMapping(value = "/view_myPageProfile", method = RequestMethod.GET)
-	public ModelAndView view_myPageProfile(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		ModelAndView mav = new ModelAndView();
-		HttpSession session = request.getSession();
-		MemberVO vo = (MemberVO) session.getAttribute("member");
-		String id = vo.getId();
-
-		// 프로필 정보 가져오기
-		MemberVO memberVO = memberService.searchMember(id);
-		mav.addObject("profileId", memberVO);
-
-		String url = "/myPage/myPageProfile";
-		mav.setViewName(url);
-		return mav;
-	}
-
-	// 회원정보 수정 이동
-	@Override
-	@RequestMapping(value = "/view_memberInfo", method = RequestMethod.GET)
-	public ModelAndView view_memberInfo(HttpServletRequest request, HttpServletResponse response) {
-		ModelAndView mav = new ModelAndView();
-		String url = "/myPage/myPageInfo";
-		mav.setViewName(url);
-		return mav;
 	}
 
 	// 회원정보 수정
