@@ -133,9 +133,11 @@ public class ProjectControllerImpl implements ProjectController {
 			HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
 		request.setCharacterEncoding("utf-8");
 		ModelAndView mav = new ModelAndView();
+		// projectVO에 id와 projectNO 값을 set
 		ProjectVO projectVO = new ProjectVO();
 		projectVO.setLeader(id);
 		projectVO.setProjectNO(projectNO);
+		// projectVO 로 프로젝트글을 search하고 모든 정보를 vo에 저장
 		ProjectVO vo = projectService.searchProject(projectVO);
 		mav.addObject("projectInfo", vo);
 		String url = "/project/projectInfo";
@@ -320,18 +322,19 @@ public class ProjectControllerImpl implements ProjectController {
 	public ResponseEntity modProject(MultipartHttpServletRequest multipartRequest, HttpServletResponse response)
 			throws Exception {
 		multipartRequest.setCharacterEncoding("utf-8");
+		// projectMap을 생성
 		Map<String, Object> projectMap = new HashMap<String, Object>();
+		// jsp에서 받아온 파라메타 값들을 projectMap에 key & value로 저장 
 		Enumeration enu = multipartRequest.getParameterNames();
 		while (enu.hasMoreElements()) {
 			String name = (String) enu.nextElement();
 			String value = multipartRequest.getParameter(name);
 			projectMap.put(name, value);
 		}
-		HttpSession session = multipartRequest.getSession();
-
+		// upload 메소드를 사용해서 pImg 선언하고, projectMap에 저장
 		String pImg = upload(multipartRequest);
 		projectMap.put("pImg", pImg);
-
+		
 		String projectNO = (String) projectMap.get("projectNO");
 		String leader = (String) projectMap.get("leader");
 		String message;

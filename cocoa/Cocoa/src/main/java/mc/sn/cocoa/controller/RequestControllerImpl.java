@@ -243,6 +243,7 @@ public class RequestControllerImpl implements RequestController {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		request.setCharacterEncoding("utf-8");
 		ModelAndView mav = new ModelAndView();
+		// reqNO로 요청글을 search하고 정보들을 vo에 저장후 addObject
 		RequestVO vo = requestService.searchRequest(reqNO);
 		mav.addObject("requestInfo", vo);
 		String url = "/sent/sentReqWait";
